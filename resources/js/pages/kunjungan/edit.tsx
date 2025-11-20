@@ -102,7 +102,7 @@ export default function Edit({ kunjungan, pasiens, dokters, polis, penjamins }: 
                                         </SelectTrigger>
                                         <SelectContent>
                                             {dokters.map((dokter) => (
-                                                <SelectItem key={dokter.id} value={dokter.id.toString()}>
+                                                <SelectItem key={dokter.id} value={dokter.kode_dokter}>
                                                     {dokter.kode_dokter} - {dokter.nama_dokter} ({dokter.spesialisasi})
                                                 </SelectItem>
                                             ))}
@@ -121,7 +121,7 @@ export default function Edit({ kunjungan, pasiens, dokters, polis, penjamins }: 
                                         </SelectTrigger>
                                         <SelectContent>
                                             {polis.map((poli) => (
-                                                <SelectItem key={poli.id} value={poli.id.toString()}>
+                                                <SelectItem key={poli.id} value={poli.kode_poli}>
                                                     {poli.kode_poli} - {poli.nama_poli}
                                                 </SelectItem>
                                             ))}

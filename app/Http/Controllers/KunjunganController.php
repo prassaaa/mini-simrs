@@ -34,9 +34,9 @@ class KunjunganController extends Controller
     public function create(): Response
     {
         $pasiens = Pasien::select('id', 'no_rm', 'nama_pasien')->get();
-        $dokters = MasterDokter::select('id', 'kode_dokter', 'nama_dokter')->get();
+        $dokters = MasterDokter::select('id', 'kode_dokter', 'nama_dokter', 'spesialisasi')->get();
         $polis = MasterPoli::select('id', 'kode_poli', 'nama_poli')->get();
-        $penjamins = MasterPenjamin::select('id', 'kode_penjamin', 'nama_penjamin')->get();
+        $penjamins = MasterPenjamin::select('id', 'kode_penjamin', 'nama_penjamin', 'jenis')->get();
 
         return Inertia::render('kunjungan/create', [
             'pasiens' => $pasiens,
@@ -74,9 +74,9 @@ class KunjunganController extends Controller
     public function edit(Kunjungan $kunjungan): Response
     {
         $pasiens = Pasien::select('id', 'no_rm', 'nama_pasien')->get();
-        $dokters = MasterDokter::select('id', 'kode_dokter', 'nama_dokter')->get();
+        $dokters = MasterDokter::select('id', 'kode_dokter', 'nama_dokter', 'spesialisasi')->get();
         $polis = MasterPoli::select('id', 'kode_poli', 'nama_poli')->get();
-        $penjamins = MasterPenjamin::select('id', 'kode_penjamin', 'nama_penjamin')->get();
+        $penjamins = MasterPenjamin::select('id', 'kode_penjamin', 'nama_penjamin', 'jenis')->get();
 
         return Inertia::render('kunjungan/edit', [
             'kunjungan' => $kunjungan,

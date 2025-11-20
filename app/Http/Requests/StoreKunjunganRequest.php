@@ -24,8 +24,8 @@ class StoreKunjunganRequest extends FormRequest
         return [
             'no_rm' => 'required|exists:pasiens,no_rm',
             'tanggal_kunjungan' => 'required|date',
-            'kode_dokter' => 'required|exists:master_dokters,id',
-            'poli' => 'required|exists:master_polis,id',
+            'kode_dokter' => 'required|exists:master_dokters,kode_dokter',
+            'poli' => 'required|exists:master_polis,kode_poli',
             'instalasi' => 'required|in:Rawat Jalan,IGD,Rawat Inap',
             'penjamin_id' => 'required|exists:master_penjamins,id',
         ];
