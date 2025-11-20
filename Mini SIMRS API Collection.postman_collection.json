@@ -1,0 +1,506 @@
+{
+	"info": {
+		"_postman_id": "b8f41e7d-0586-4180-ae6b-f98cf6fd68b3",
+		"name": "Mini SIMRS API Collection",
+		"description": "API Collection untuk Mini SIMRS - Sistem Informasi Manajemen Rumah Sakit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36303394",
+		"_collection_link": "https://jubelse-land-indonesia.postman.co/workspace/Team-Workspace~3bbea7fb-d419-4131-87f6-7ea4b2c567fe/collection/36303394-b8f41e7d-0586-4180-ae6b-f98cf6fd68b3?action=share&source=collection_link&creator=36303394"
+	},
+	"item": [
+		{
+			"name": "Pasien API",
+			"item": [
+				{
+					"name": "Get All Pasien",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pasien?per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pasien"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page"
+								}
+							]
+						},
+						"description": "Menampilkan seluruh data pasien dengan pagination"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pasien by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pasien/16",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pasien",
+								"16"
+							]
+						},
+						"description": "Detail pasien dan daftar kunjungan berdasarkan ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Pasien",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"no_rm\": \"RM001\",\n    \"nama_pasien\": \"John Doe\",\n    \"tanggal_lahir\": \"1990-01-15\",\n    \"jenis_kelamin\": \"L\",\n    \"alamat\": \"Jl. Contoh No. 123, Jakarta\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/pasien",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pasien"
+							]
+						},
+						"description": "Menambahkan pasien baru dengan validasi required & unique no_rm"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pasien",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"no_rm\": \"RM001\",\n    \"nama_pasien\": \"John Doen\",\n    \"tanggal_lahir\": \"1990-01-15\",\n    \"jenis_kelamin\": \"P\",\n    \"alamat\": \"Jl. Contoh Baru No. 456, Jakarta\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/pasien/16",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pasien",
+								"16"
+							]
+						},
+						"description": "Update data pasien berdasarkan ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Pasien",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pasien/16",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pasien",
+								"16"
+							]
+						},
+						"description": "Hapus data pasien berdasarkan ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Kunjungan API",
+			"item": [
+				{
+					"name": "Get All Kunjungan",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kunjungan?per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kunjungan"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Menampilkan seluruh data kunjungan dengan relasi pasien, dokter, poli, penjamin"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kunjungan by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kunjungan/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kunjungan",
+								"1"
+							]
+						},
+						"description": "Detail kunjungan dengan transaksi billing"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Kunjungan",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"no_rm\": \"RM-2025-0002\",\n    \"tanggal_kunjungan\": \"2025-11-20\",\n    \"kode_dokter\": \"DOK-001\",\n    \"poli\": \"POLI-UMUM\",\n    \"instalasi\": \"Rawat Jalan\",\n    \"penjamin_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/kunjungan",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kunjungan"
+							]
+						},
+						"description": "Menambahkan kunjungan baru (no_registrasi auto-generate)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Kunjungan",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"no_rm\": \"RM-2025-0002\",\n    \"tanggal_kunjungan\": \"2025-11-20\",\n    \"kode_dokter\": \"DOK-001\",\n    \"poli\": \"POLI-UMUM\",\n    \"instalasi\": \"IGD\",\n    \"penjamin_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/kunjungan/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kunjungan",
+								"2"
+							]
+						},
+						"description": "Update data kunjungan"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Kunjungan",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/kunjungan/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"kunjungan",
+								"2"
+							]
+						},
+						"description": "Hapus data kunjungan"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaksi API",
+			"item": [
+				{
+					"name": "Get All Transaksi",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transaksi?per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaksi"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Menampilkan seluruh data transaksi billing dengan detail tindakan"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaksi by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transaksi/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"1"
+							]
+						},
+						"description": "Detail transaksi dengan kunjungan dan detail tindakan"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Transaksi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"no_registrasi_kunjungan\": \"20251120024210\",\n    \"details\": [\n        {\n            \"nama_tindakan\": \"Konsultasi Dokter\",\n            \"harga\": 150000,\n            \"qty\": 1\n        },\n        {\n            \"nama_tindakan\": \"Pemeriksaan Lab Darah\",\n            \"harga\": 200000,\n            \"qty\": 1\n        },\n        {\n            \"nama_tindakan\": \"Obat\",\n            \"harga\": 50000,\n            \"qty\": 2\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/transaksi",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaksi"
+							]
+						},
+						"description": "Menambahkan transaksi billing baru dengan multiple detail tindakan. Total harga akan dihitung otomatis."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Transaksi",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"details\": [\n        {\n            \"nama_tindakan\": \"Konsultasi Dokter Spesialis\",\n            \"harga\": 250000,\n            \"qty\": 1\n        },\n        {\n            \"nama_tindakan\": \"Pemeriksaan Lab Lengkap\",\n            \"harga\": 350000,\n            \"qty\": 1\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/transaksi/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"2"
+							]
+						},
+						"description": "Update transaksi billing (detail lama akan dihapus dan diganti dengan yang baru)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Transaksi",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/transaksi/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaksi",
+								"2"
+							]
+						},
+						"description": "Hapus transaksi billing (detail akan terhapus otomatis karena cascade)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}
