@@ -1,6 +1,7 @@
 import PasienController from '@/actions/App/Http/Controllers/PasienController';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
     Table,
     TableBody,
@@ -13,7 +14,9 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type PaginatedData, type Pasien } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { format } from 'date-fns';
-import { Eye, Pencil, Plus, Trash2 } from 'lucide-react';
+import { Eye, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,9 +27,29 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 interface Props {
     pasiens: PaginatedData<Pasien>;
+    filters: {
+        search?: string;
+    };
 }
 
-export default function Index({ pasiens }: Props) {
+export default function Index({ pasiens, filters }: Props) {
+    const [search, setSearch] = useState(filters.search || '');
+
+    const debouncedSearch = useDebouncedCallback((value: string) => {
+        router.get(
+            PasienController.index().url,
+            { search: value },
+            {
+                preserveState: true,
+                preserveScroll: true,
+            }
+        );
+    }, 500);
+
+    useEffect(() => {
+        debouncedSearch(search);
+    }, [search, debouncedSearch]);
+
     const handleDelete = (id: number) => {
         if (confirm('Apakah Anda yakin ingin menghapus data pasien ini?')) {
             router.delete(PasienController.destroy(id).url);
@@ -36,7 +59,7 @@ export default function Index({ pasiens }: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Data Pasien" />
-            
+
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="flex items-center justify-between">
                     <Heading title="Data Pasien" />
@@ -46,6 +69,18 @@ export default function Index({ pasiens }: Props) {
                             Tambah Pasien
                         </Button>
                     </Link>
+                </div>
+
+                {/* Search Bar */}
+                <div className="relative w-full max-w-sm">
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                        type="text"
+                        placeholder="Cari pasien ( No. RM, Nama, dan Alamat )"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="pl-9"
+                    />
                 </div>
 
                 <div className="rounded-xl border border-sidebar-border/70 bg-card dark:border-sidebar-border">

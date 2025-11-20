@@ -14,11 +14,27 @@ class PasienController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $pasiens = Pasien::latest()->paginate(10);
+        $search = $request->input('search');
+
+        $pasiens = Pasien::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('no_rm', 'like', "%{$search}%")
+                        ->orWhere('nama_pasien', 'like', "%{$search}%")
+                        ->orWhere('alamat', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return Inertia::render('pasien/index', [
             'pasiens' => $pasiens,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
 
