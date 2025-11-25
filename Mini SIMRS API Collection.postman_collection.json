@@ -12,6 +12,34 @@
 			"name": "Pasien API",
 			"item": [
 				{
+					"name": "Search Pasien by No RM",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/pasien/search/RM-2025-0001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pasien",
+								"search",
+								"RM-2025-0001"
+							]
+						},
+						"description": "Mencari pasien berdasarkan nomor rekam medis (No RM)"
+					},
+					"response": []
+				},
+				{
 					"name": "Get All Pasien",
 					"request": {
 						"method": "GET",
@@ -328,6 +356,246 @@
 							]
 						},
 						"description": "Hapus data kunjungan"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jadwal Dokter API",
+			"item": [
+				{
+					"name": "Get All Jadwal Dokter",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jadwal-dokter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jadwal-dokter"
+							]
+						},
+						"description": "Menampilkan seluruh jadwal dokter dengan relasi dokter dan poli"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Jadwal Dokter by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jadwal-dokter/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jadwal-dokter",
+								"1"
+							]
+						},
+						"description": "Detail jadwal dokter berdasarkan ID dengan relasi dokter dan poli"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Antrian API",
+			"item": [
+				{
+					"name": "Get All Antrian",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/antrian",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"antrian"
+							]
+						},
+						"description": "Menampilkan seluruh data antrian dengan relasi pasien, dokter, dan poli"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Antrian by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/antrian/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"antrian",
+								"1"
+							]
+						},
+						"description": "Detail antrian berdasarkan ID dengan relasi pasien, dokter, dan poli"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Antrian",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"no_rm\": \"RM-2025-0001\",\n    \"kode_dokter\": \"DOK-001\",\n    \"kode_poli\": \"POLI-UMUM\",\n    \"tanggal_antrian\": \"2025-11-25\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/antrian",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"antrian"
+							]
+						},
+						"description": "Menambahkan antrian baru (nomor antrian akan di-generate otomatis)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Antrian",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/antrian/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"antrian",
+								"1"
+							]
+						},
+						"description": "Hapus data antrian berdasarkan ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Master Poli API",
+			"item": [
+				{
+					"name": "Get All Master Poli",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/master-poli",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"master-poli"
+							]
+						},
+						"description": "Menampilkan seluruh data master poli"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Master Penjamin API",
+			"item": [
+				{
+					"name": "Get All Master Penjamin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/master-penjamin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"master-penjamin"
+							]
+						},
+						"description": "Menampilkan seluruh data master penjamin"
 					},
 					"response": []
 				}

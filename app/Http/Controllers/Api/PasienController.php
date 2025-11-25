@@ -156,4 +156,27 @@ class PasienController extends Controller
             'message' => 'Pasien berhasil dihapus',
         ]);
     }
+
+    /**
+     * Search pasien by NO RM
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function searchByNoRM(string $noRm): JsonResponse
+    {
+        $pasien = Pasien::where('no_rm', $noRm)->first();
+
+        if (!$pasien) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pasien dengan NO RM tersebut tidak ditemukan',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pasien ditemukan',
+            'data' => new PasienResource($pasien),
+        ]);
+    }
 }
