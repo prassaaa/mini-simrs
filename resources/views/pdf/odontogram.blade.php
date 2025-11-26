@@ -335,7 +335,7 @@
                     <td>{{ $odontogram->kunjungan->pasien->tanggal_lahir ? \Carbon\Carbon::parse($odontogram->kunjungan->pasien->tanggal_lahir)->format('d/m/Y') : '-' }}</td>
                     <td class="label">Poli</td>
                     <td class="colon">:</td>
-                    <td>{{ $odontogram->kunjungan->poli_relation->nama_poli ?? '-' }}</td>
+                    <td>{{ $odontogram->kunjungan->poliRelation->nama_poli ?? '-' }}</td>
                 </tr>
             </table>
         </div>
@@ -503,7 +503,7 @@
                     &nbsp;
                 </div>
                 <div class="signature-box">
-                    <div class="date">{{ $odontogram->kunjungan->poli_relation->lokasi ?? 'Kota Sehat' }}, {{ $odontogram->created_at->format('d F Y') }}</div>
+                    <div class="date">{{ $odontogram->kunjungan->poliRelation->lokasi ?? 'Kota Sehat' }}, {{ $odontogram->created_at->format('d F Y') }}</div>
                     <div class="title-sign">Dokter Pemeriksa,</div>
                     <div class="name">{{ $odontogram->kunjungan->dokter->nama_dokter ?? '________________' }}</div>
                 </div>
