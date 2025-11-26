@@ -26,7 +26,7 @@ class PasienController extends Controller
                         ->orWhere('alamat', 'like', "%{$search}%");
                 });
             })
-            ->latest()
+            ->orderBy('no_rm', 'desc')
             ->paginate(10)
             ->withQueryString();
 
