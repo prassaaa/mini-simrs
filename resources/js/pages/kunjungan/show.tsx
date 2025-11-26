@@ -15,7 +15,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Kunjungan } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { format } from 'date-fns';
-import { ArrowLeft, Eye, Pencil, Plus, Trash2 } from 'lucide-react';
+import { ArrowLeft, Eye, Pencil, Plus, Trash2, Activity } from 'lucide-react';
 
 interface Props {
     kunjungan: Kunjungan;
@@ -263,6 +263,84 @@ export default function Show({ kunjungan }: Props) {
                                         <Button>
                                             <Plus className="mr-2 h-4 w-4" />
                                             Buat Transaksi
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Odontogram Section - Only show for Poli Gigi */}
+                        {kunjungan.poli_relation?.kode_poli === 'POLI-GIGI' && kunjungan.odontogram && (
+                            <div className="rounded-xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
+                                <div className="mb-4 flex items-center justify-between">
+                                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                                        <Activity className="h-5 w-5" />
+                                        Odontogram
+                                    </h3>
+                                    <div className="flex gap-2">
+                                        <Link href={`/odontogram/${kunjungan.odontogram.id}`}>
+                                            <Button variant="outline" size="sm">
+                                                <Eye className="mr-2 h-4 w-4" />
+                                                Lihat Detail
+                                            </Button>
+                                        </Link>
+                                        <Link href={`/odontogram/${kunjungan.odontogram.id}/edit`}>
+                                            <Button variant="outline" size="sm">
+                                                <Pencil className="mr-2 h-4 w-4" />
+                                                Edit
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                    <div>
+                                        <span className="text-muted-foreground">Status D:</span>
+                                        <p className="font-medium text-lg">{kunjungan.odontogram.status_d}</p>
+                                    </div>
+                                    <div>
+                                        <span className="text-muted-foreground">Status M:</span>
+                                        <p className="font-medium text-lg">{kunjungan.odontogram.status_m}</p>
+                                    </div>
+                                    <div>
+                                        <span className="text-muted-foreground">Status F:</span>
+                                        <p className="font-medium text-lg">{kunjungan.odontogram.status_f}</p>
+                                    </div>
+                                    <div>
+                                        <span className="text-muted-foreground">DMF Total:</span>
+                                        <p className="font-medium text-lg">
+                                            {(kunjungan.odontogram.status_d || 0) +
+                                             (kunjungan.odontogram.status_m || 0) +
+                                             (kunjungan.odontogram.status_f || 0)}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {kunjungan.odontogram.diagnosa && (
+                                    <div className="mt-4 pt-4 border-t">
+                                        <span className="text-sm text-muted-foreground">Diagnosa:</span>
+                                        <p className="font-medium">{kunjungan.odontogram.diagnosa}</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {kunjungan.poli_relation?.kode_poli === 'POLI-GIGI' && !kunjungan.odontogram && (
+                            <div className="rounded-xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                                            <Activity className="h-5 w-5" />
+                                            Odontogram
+                                        </h3>
+                                        <p className="text-sm text-muted-foreground">
+                                            Belum ada pemeriksaan odontogram untuk kunjungan ini
+                                        </p>
+                                    </div>
+                                    <Link href={`/kunjungan/${kunjungan.id}/odontogram/create`}>
+                                        <Button>
+                                            <Plus className="mr-2 h-4 w-4" />
+                                            Buat Odontogram
                                         </Button>
                                     </Link>
                                 </div>

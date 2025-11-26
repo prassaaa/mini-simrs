@@ -57,4 +57,9 @@ class Kunjungan extends Model
     {
         return $this->hasOne(Transaksi::class, 'no_registrasi_kunjungan', 'no_registrasi_kunjungan');
     }
+
+    public function odontogram(): HasOne
+    {
+        return $this->hasOne(Odontogram::class);
+    }
 }

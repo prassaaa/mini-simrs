@@ -61,6 +61,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Routes untuk Transaksi
     Route::resource('transaksi', \App\Http\Controllers\TransaksiController::class);
+
+    // Routes untuk Odontogram
+    Route::get('kunjungan/{kunjungan}/odontogram/create', [\App\Http\Controllers\OdontogramController::class, 'create'])->name('odontogram.create');
+    Route::post('kunjungan/{kunjungan}/odontogram', [\App\Http\Controllers\OdontogramController::class, 'store'])->name('odontogram.store');
+    Route::get('odontogram/{odontogram}', [\App\Http\Controllers\OdontogramController::class, 'show'])->name('odontogram.show');
+    Route::get('odontogram/{odontogram}/edit', [\App\Http\Controllers\OdontogramController::class, 'edit'])->name('odontogram.edit');
+    Route::put('odontogram/{odontogram}', [\App\Http\Controllers\OdontogramController::class, 'update'])->name('odontogram.update');
+    Route::delete('odontogram/{odontogram}', [\App\Http\Controllers\OdontogramController::class, 'destroy'])->name('odontogram.destroy');
+    Route::get('odontogram/{odontogram}/export-pdf', [\App\Http\Controllers\OdontogramController::class, 'exportPdf'])->name('odontogram.exportPdf');
+    Route::get('pasien/{noRm}/odontogram-history', [\App\Http\Controllers\OdontogramController::class, 'history'])->name('odontogram.history');
 });
 
 require __DIR__.'/settings.php';

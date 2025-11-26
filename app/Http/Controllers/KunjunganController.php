@@ -61,7 +61,7 @@ class KunjunganController extends Controller
      */
     public function show(Kunjungan $kunjungan): Response
     {
-        $kunjungan->load(['pasien', 'dokter', 'poliRelation', 'penjamin', 'transaksi.details']);
+        $kunjungan->load(['pasien', 'dokter', 'poliRelation', 'penjamin', 'transaksi.details', 'odontogram']);
 
         return Inertia::render('kunjungan/show', [
             'kunjungan' => $kunjungan,
