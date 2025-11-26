@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             MasterPoliSeeder::class,
             MasterDokterSeeder::class,
             PasienSeeder::class,
+            JadwalDokterSeeder::class,
         ]);
     }
 }
