@@ -15,7 +15,7 @@ import { type BreadcrumbItem, type PaginatedData, type Pasien } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { Eye, Pencil, Plus, Search, Trash2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -33,12 +33,12 @@ interface Props {
 }
 
 export default function Index({ pasiens, filters }: Props) {
-    const [search, setSearch] = useState(filters.search || '');
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     const debouncedSearch = useDebouncedCallback((value: string) => {
         router.get(
             PasienController.index().url,
-            { search: value },
+            { search: value || undefined },
             {
                 preserveState: true,
                 preserveScroll: true,
@@ -46,9 +46,10 @@ export default function Index({ pasiens, filters }: Props) {
         );
     }, 500);
 
-    useEffect(() => {
-        debouncedSearch(search);
-    }, [search, debouncedSearch]);
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        debouncedSearch(value);
+    };
 
     const handleDelete = (id: number) => {
         if (confirm('Apakah Anda yakin ingin menghapus data pasien ini?')) {
@@ -75,10 +76,11 @@ export default function Index({ pasiens, filters }: Props) {
                 <div className="relative w-full max-w-sm">
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
+                        ref={searchInputRef}
                         type="text"
                         placeholder="Cari pasien ( No. RM, Nama, dan Alamat )"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        defaultValue={filters.search || ''}
+                        onChange={handleSearchChange}
                         className="pl-9"
                     />
                 </div>
