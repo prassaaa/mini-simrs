@@ -14,23 +14,27 @@ class KunjunganController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
-        $kunjungans = Kunjungan::with(['pasien', 'dokter', 'poliRelation', 'penjamin'])
-            ->orderBy('tanggal_kunjungan', 'desc')
-            ->paginate($perPage);
+        $query = Kunjungan::with(['pasien', 'dokter', 'poliRelation', 'penjamin']);
+
+        // Filter by no_rm if provided
+        if ($request->has('no_rm')) {
+            $query->where('no_rm', $request->no_rm);
+        }
+
+        $kunjungan = $query->orderBy('tanggal_kunjungan', 'desc')->paginate(10);
 
         return response()->json([
             'success' => true,
             'message' => 'Data kunjungan berhasil diambil',
-            'data' => KunjunganResource::collection($kunjungans),
+            'data' => $kunjungan->items(),
             'meta' => [
-                'total' => $kunjungans->total(),
-                'count' => $kunjungans->count(),
-                'per_page' => $kunjungans->perPage(),
-                'current_page' => $kunjungans->currentPage(),
-                'total_pages' => $kunjungans->lastPage(),
+                'total' => $kunjungan->total(),
+                'count' => $kunjungan->count(),
+                'per_page' => $kunjungan->perPage(),
+                'current_page' => $kunjungan->currentPage(),
+                'total_pages' => $kunjungan->lastPage(),
             ],
         ]);
     }
@@ -70,10 +74,9 @@ class KunjunganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): JsonResponse
+    public function show(string $id)
     {
-        $kunjungan = Kunjungan::with(['pasien', 'dokter', 'poliRelation', 'penjamin', 'transaksi.details'])
-            ->find($id);
+        $kunjungan = Kunjungan::with(['pasien', 'dokter', 'poliRelation', 'penjamin'])->find($id);
 
         if (!$kunjungan) {
             return response()->json([
@@ -85,7 +88,7 @@ class KunjunganController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Detail kunjungan berhasil diambil',
-            'data' => new KunjunganResource($kunjungan),
+            'data' => $kunjungan,
         ]);
     }
 
