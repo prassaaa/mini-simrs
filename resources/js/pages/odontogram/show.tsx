@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { OdontogramChart, getKondisiLabel } from '@/components/odontogram';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
-import { Edit, Trash2, ArrowLeft, Printer, Download } from 'lucide-react';
+import { Edit, Trash2, ArrowLeft, Download } from 'lucide-react';
 import { router } from '@inertiajs/react';
 
 interface Props {
@@ -42,10 +42,6 @@ export default function ShowOdontogram({ odontogram }: Props) {
         if (confirm('Apakah Anda yakin ingin menghapus odontogram ini?')) {
             router.delete(`/odontogram/${odontogram.id}`);
         }
-    };
-
-    const handlePrint = () => {
-        window.print();
     };
 
     const getOcclusiLabel = (value: string) => {
@@ -104,10 +100,6 @@ export default function ShowOdontogram({ odontogram }: Props) {
                         </Button>
                     </Link>
                     <div className="flex gap-2">
-                        <Button variant="outline" onClick={handlePrint}>
-                            <Printer className="w-4 h-4 mr-2" />
-                            Cetak
-                        </Button>
                         <a href={`/odontogram/${odontogram.id}/export-pdf`}>
                             <Button variant="outline">
                                 <Download className="w-4 h-4 mr-2" />

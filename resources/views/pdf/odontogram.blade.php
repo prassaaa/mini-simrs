@@ -145,6 +145,127 @@
             vertical-align: middle;
         }
 
+        /* Odontogram Chart Visual */
+        .odontogram-visual {
+            width: 100%;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+
+        .odontogram-visual-title {
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .teeth-chart {
+            width: 100%;
+        }
+
+        .teeth-chart-row {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .teeth-chart-row table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .teeth-chart-row td {
+            padding: 2px;
+            text-align: center;
+            vertical-align: bottom;
+        }
+
+        .teeth-chart-row.bottom-row td {
+            vertical-align: top;
+        }
+
+        .tooth-cell {
+            width: 28px;
+            text-align: center;
+        }
+
+        .tooth-cell img {
+            width: 22px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .tooth-cell .tooth-num {
+            font-size: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .chart-divider {
+            width: 100%;
+            border-top: 2px solid #333;
+            margin: 8px 0;
+        }
+
+        .chart-divider-vertical {
+            width: 2px;
+            background-color: #333;
+        }
+
+        .row-label {
+            font-size: 8px;
+            font-weight: bold;
+            color: #666;
+            padding: 0 5px;
+        }
+
+        .dinding-indicator {
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        .dinding-box {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #999;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .dinding-top, .dinding-bottom {
+            position: absolute;
+            left: 2px;
+            right: 2px;
+            height: 3px;
+        }
+
+        .dinding-top { top: 1px; }
+        .dinding-bottom { bottom: 1px; }
+
+        .dinding-left, .dinding-right {
+            position: absolute;
+            top: 2px;
+            bottom: 2px;
+            width: 3px;
+        }
+
+        .dinding-left { left: 1px; }
+        .dinding-right { right: 1px; }
+
+        .dinding-center {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            left: 4px;
+            right: 4px;
+        }
+
+        .dinding-normal { background-color: #38bdf8; }
+        .dinding-bermasalah { background-color: #f97316; }
+
         /* Kondisi Gigi Table */
         .kondisi-table {
             width: 100%;
@@ -367,6 +488,311 @@
         <div class="info-section odontogram-section">
             <h4>Odontogram</h4>
 
+            @php
+                // Helper function to get image path
+                $kondisiImages = [
+                    'sou' => 'sou.png',
+                    'car' => 'car.png',
+                    'amf' => 'amf.png',
+                    'amf-rct' => 'amf-rct.png',
+                    'cof-1' => 'cof-1.png',
+                    'cof-2' => 'cof-2.png',
+                    'cof-rct' => 'cof-rct.png',
+                    'fmc' => 'fmc.png',
+                    'fmc-rct' => 'fmc-rct.png',
+                    'poc' => 'poc.png',
+                    'poc-rct' => 'poc-rct.png',
+                    'rct' => 'rct.png',
+                    'mis' => 'mis.png',
+                    'non' => 'non.png',
+                    'nvt' => 'nvt.png',
+                    'ano' => 'ano.png',
+                    'rrx' => 'rrx.png',
+                    'une' => 'une.png',
+                    'pre' => 'pre.png',
+                    'fis' => 'fis.png',
+                    'cfr' => 'cfr.png',
+                    'frm-acr' => 'frm-acr.png',
+                    'ipx-poc' => 'ipx-poc.png',
+                    'meb-left' => 'meb-left.png',
+                    'meb-center' => 'meb-center.png',
+                    'meb-right' => 'meb-right.png',
+                    'mcb-left' => 'mcb-left.png',
+                    'mcb-right' => 'mcb-right.png',
+                    'pob-left' => 'pob-left.png',
+                    'pob-center' => 'pob-center.png',
+                    'pob-right' => 'pob-right.png',
+                    'migrasi-left' => 'migrasi-left.png',
+                    'migrasi-right' => 'migrasi-right.png',
+                    'rotasi-arahjam' => 'rotasi-arahjam.png',
+                    'rotasi-balikjam' => 'rotasi-balikjam.png',
+                ];
+
+                // Index gigi data by nomor_gigi
+                $gigiIndexed = $odontogram->gigiList->keyBy('nomor_gigi');
+
+                // Teeth arrays
+                $gigiDewasaAtasKanan = ['18', '17', '16', '15', '14', '13', '12', '11'];
+                $gigiDewasaAtasKiri = ['21', '22', '23', '24', '25', '26', '27', '28'];
+                $gigiDewasaBawahKanan = ['48', '47', '46', '45', '44', '43', '42', '41'];
+                $gigiDewasaBawahKiri = ['31', '32', '33', '34', '35', '36', '37', '38'];
+                $gigiSusuAtasKanan = ['55', '54', '53', '52', '51'];
+                $gigiSusuAtasKiri = ['61', '62', '63', '64', '65'];
+                $gigiSusuBawahKanan = ['85', '84', '83', '82', '81'];
+                $gigiSusuBawahKiri = ['71', '72', '73', '74', '75'];
+
+                // Function to get kondisi for a tooth
+                $getKondisi = function($nomor) use ($gigiIndexed) {
+                    return $gigiIndexed->has($nomor) ? $gigiIndexed[$nomor]->kondisi : 'sou';
+                };
+
+                // Function to get gigi data
+                $getGigiData = function($nomor) use ($gigiIndexed) {
+                    return $gigiIndexed->get($nomor);
+                };
+
+                // Function to get image base64
+                $getImageBase64 = function($kondisi) use ($kondisiImages) {
+                    $filename = $kondisiImages[$kondisi] ?? 'sou.png';
+                    $path = public_path('assets/odontogram/png/' . $filename);
+                    if (file_exists($path)) {
+                        $data = file_get_contents($path);
+                        return 'data:image/png;base64,' . base64_encode($data);
+                    }
+                    // Fallback to sou.png
+                    $souPath = public_path('assets/odontogram/png/sou.png');
+                    if (file_exists($souPath)) {
+                        $data = file_get_contents($souPath);
+                        return 'data:image/png;base64,' . base64_encode($data);
+                    }
+                    return '';
+                };
+            @endphp
+
+            <!-- Visual Odontogram Chart -->
+            <div class="odontogram-visual">
+                <div class="odontogram-visual-title">DIAGRAM GIGI</div>
+
+                <div class="teeth-chart">
+                    <!-- Keterangan -->
+                    <div style="text-align: center; margin-bottom: 10px; font-size: 8px;">
+                        <span style="display: inline-block; margin-right: 15px;">
+                            <span style="display: inline-block; width: 10px; height: 10px; background-color: #38bdf8; border: 1px solid #999;"></span>
+                            Dinding Normal
+                        </span>
+                        <span style="display: inline-block;">
+                            <span style="display: inline-block; width: 10px; height: 10px; background-color: #f97316; border: 1px solid #999;"></span>
+                            Dinding Bermasalah
+                        </span>
+                    </div>
+
+                    <!-- Header -->
+                    <div style="text-align: center; margin-bottom: 5px;">
+                        <span style="font-size: 9px; font-weight: bold;">KANAN</span>
+                        <span style="margin: 0 50px;">|</span>
+                        <span style="font-size: 9px; font-weight: bold;">KIRI</span>
+                    </div>
+
+                    <!-- Gigi Dewasa Atas -->
+                    <div class="teeth-chart-row">
+                        <table>
+                            <tr>
+                                @foreach($gigiDewasaAtasKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                                <td class="chart-divider-vertical" style="width: 2px;"></td>
+                                @foreach($gigiDewasaAtasKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                @foreach($gigiDewasaAtasKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                                <td style="width: 2px;"></td>
+                                @foreach($gigiDewasaAtasKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                @foreach($gigiDewasaAtasKanan as $nomor)
+                                @php $gigi = $getGigiData($nomor); @endphp
+                                <td class="tooth-cell">
+                                    @if($gigi && ($gigi->dinding_atas || $gigi->dinding_bawah || $gigi->dinding_kiri || $gigi->dinding_kanan || $gigi->dinding_tengah))
+                                    <div class="dinding-box">
+                                        <div class="dinding-top {{ $gigi->dinding_atas === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_atas === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-left {{ $gigi->dinding_kiri === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kiri === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-center {{ $gigi->dinding_tengah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_tengah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-right {{ $gigi->dinding_kanan === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kanan === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-bottom {{ $gigi->dinding_bawah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_bawah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                    </div>
+                                    @endif
+                                </td>
+                                @endforeach
+                                <td style="width: 2px;"></td>
+                                @foreach($gigiDewasaAtasKiri as $nomor)
+                                @php $gigi = $getGigiData($nomor); @endphp
+                                <td class="tooth-cell">
+                                    @if($gigi && ($gigi->dinding_atas || $gigi->dinding_bawah || $gigi->dinding_kiri || $gigi->dinding_kanan || $gigi->dinding_tengah))
+                                    <div class="dinding-box">
+                                        <div class="dinding-top {{ $gigi->dinding_atas === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_atas === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-left {{ $gigi->dinding_kiri === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kiri === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-center {{ $gigi->dinding_tengah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_tengah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-right {{ $gigi->dinding_kanan === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kanan === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-bottom {{ $gigi->dinding_bawah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_bawah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                    </div>
+                                    @endif
+                                </td>
+                                @endforeach
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Gigi Susu Atas -->
+                    <div class="teeth-chart-row" style="border-bottom: 1px solid #999; padding-bottom: 8px;">
+                        <table>
+                            <tr>
+                                <td colspan="3"></td>
+                                @foreach($gigiSusuAtasKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                                <td class="chart-divider-vertical" style="width: 2px;"></td>
+                                @foreach($gigiSusuAtasKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                @foreach($gigiSusuAtasKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                                <td style="width: 2px;"></td>
+                                @foreach($gigiSusuAtasKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                                <td colspan="3"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Gigi Susu Bawah -->
+                    <div class="teeth-chart-row" style="padding-top: 8px;">
+                        <table>
+                            <tr>
+                                <td colspan="3"></td>
+                                @foreach($gigiSusuBawahKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                                <td style="width: 2px;"></td>
+                                @foreach($gigiSusuBawahKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                @foreach($gigiSusuBawahKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                                <td class="chart-divider-vertical" style="width: 2px;"></td>
+                                @foreach($gigiSusuBawahKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                                <td colspan="3"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Gigi Dewasa Bawah -->
+                    <div class="teeth-chart-row bottom-row">
+                        <table>
+                            <tr>
+                                @foreach($gigiDewasaBawahKanan as $nomor)
+                                @php $gigi = $getGigiData($nomor); @endphp
+                                <td class="tooth-cell">
+                                    @if($gigi && ($gigi->dinding_atas || $gigi->dinding_bawah || $gigi->dinding_kiri || $gigi->dinding_kanan || $gigi->dinding_tengah))
+                                    <div class="dinding-box">
+                                        <div class="dinding-top {{ $gigi->dinding_atas === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_atas === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-left {{ $gigi->dinding_kiri === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kiri === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-center {{ $gigi->dinding_tengah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_tengah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-right {{ $gigi->dinding_kanan === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kanan === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-bottom {{ $gigi->dinding_bawah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_bawah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                    </div>
+                                    @endif
+                                </td>
+                                @endforeach
+                                <td style="width: 2px;"></td>
+                                @foreach($gigiDewasaBawahKiri as $nomor)
+                                @php $gigi = $getGigiData($nomor); @endphp
+                                <td class="tooth-cell">
+                                    @if($gigi && ($gigi->dinding_atas || $gigi->dinding_bawah || $gigi->dinding_kiri || $gigi->dinding_kanan || $gigi->dinding_tengah))
+                                    <div class="dinding-box">
+                                        <div class="dinding-top {{ $gigi->dinding_atas === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_atas === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-left {{ $gigi->dinding_kiri === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kiri === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-center {{ $gigi->dinding_tengah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_tengah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-right {{ $gigi->dinding_kanan === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_kanan === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                        <div class="dinding-bottom {{ $gigi->dinding_bawah === 'bermasalah' ? 'dinding-bermasalah' : ($gigi->dinding_bawah === 'normal' ? 'dinding-normal' : '') }}"></div>
+                                    </div>
+                                    @endif
+                                </td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                @foreach($gigiDewasaBawahKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                                <td style="width: 2px;"></td>
+                                @foreach($gigiDewasaBawahKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <img src="{{ $getImageBase64($getKondisi($nomor)) }}" alt="{{ $nomor }}">
+                                </td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                @foreach($gigiDewasaBawahKanan as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                                <td class="chart-divider-vertical" style="width: 2px;"></td>
+                                @foreach($gigiDewasaBawahKiri as $nomor)
+                                <td class="tooth-cell">
+                                    <div class="tooth-num">{{ $nomor }}</div>
+                                </td>
+                                @endforeach
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- Kondisi Gigi yang Bermasalah -->
             @php
                 $gigiProblems = $odontogram->gigiList->filter(function($gigi) {
@@ -375,11 +801,13 @@
             @endphp
 
             @if($gigiProblems->count() > 0)
+            <p style="font-size: 9px; font-weight: bold; margin: 10px 0 5px 0;">Detail Kondisi Gigi:</p>
             <table class="kondisi-table">
                 <thead>
                     <tr>
-                        <th style="width: 80px;">No. Gigi</th>
-                        <th style="width: 150px;">Kondisi</th>
+                        <th style="width: 60px;">No. Gigi</th>
+                        <th style="width: 50px;">Gambar</th>
+                        <th style="width: 130px;">Kondisi</th>
                         <th>Dinding Bermasalah</th>
                         <th>Keterangan</th>
                     </tr>
@@ -388,6 +816,9 @@
                     @foreach($gigiProblems as $gigi)
                     <tr>
                         <td style="text-align: center; font-weight: bold;">{{ $gigi->nomor_gigi }}</td>
+                        <td style="text-align: center;">
+                            <img src="{{ $getImageBase64($gigi->kondisi) }}" alt="{{ $gigi->kondisi }}" style="width: 25px; height: auto;">
+                        </td>
                         <td>{{ $kondisiLabels[$gigi->kondisi] ?? $gigi->kondisi }}</td>
                         <td>
                             @php
@@ -406,7 +837,7 @@
                 </tbody>
             </table>
             @else
-            <p style="text-align: center; color: #666; padding: 20px;">Semua gigi dalam kondisi normal (Sound)</p>
+            <p style="text-align: center; color: #666; padding: 10px; font-size: 9px;">Semua gigi dalam kondisi normal (Sound)</p>
             @endif
         </div>
 
